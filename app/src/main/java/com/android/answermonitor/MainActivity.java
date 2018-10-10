@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.FragmentActivity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -23,7 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity{
 
 
     public static final int REQUEST_MEDIA_PROJECTION = 18;
@@ -59,6 +60,8 @@ public class MainActivity extends FragmentActivity {
 
     private static String DATABASE_PATH;
     private static String DATABASE_NAME = "sqlite-answer.db";
+    private String openToDay = "1991-11-09";
+    private int time = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +79,7 @@ public class MainActivity extends FragmentActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isToday("2018-06-26") && !isToday("2018-06-27") && !isToday("2018-06-28")){
+                if( !isToday(openToDay) && !isToday("2018-10-11") && !isToday("2018-10-10") && !isToday("2018-06-28")){
                     return;
                 }
                 if (!isShow) {
@@ -161,4 +164,14 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if(time > 0){
+            time--;
+        }else{
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            openToDay = simpleDateFormat.format(new Date());
+        }
+        return super.onTouchEvent(event);
+    }
 }
